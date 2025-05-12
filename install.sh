@@ -1,4 +1,4 @@
-conda install pytorch==1.7.0 torchvision==0.22.0 cudatoolkit=10.2 -c pytorch
+conda install pytorch==2.7.0 torchvision==0.22.0 cudatoolkit=10.2 -c pytorch
 pip install torch==2.4.0 torchvision==0.19.0 torchaudio==2.4.0 --index-url https://download.pytorch.org/whl/cu124
 
 pip install cython
