@@ -18,18 +18,6 @@ from torch.utils.cpp_extension import CUDAExtension
 from setuptools import find_packages
 from setuptools import setup
 
-import sys
-
-# Afficher la version de Python
-print(f"Python version: {sys.version}")
-
-# Afficher l'environnement virtuel (venv) si activé
-if hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix):
-    print(f"Virtual environment: {sys.prefix}")
-else:
-    print("No virtual environment (venv) is active.")
-
-
 requirements = ["torch", "torchvision"]
 
 def get_extensions():
