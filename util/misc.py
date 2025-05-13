@@ -489,32 +489,35 @@ def init_distributed_mode(args):
         args.world_size = args.world_size * local_world_size
         args.gpu = args.local_rank = int(os.environ['LOCAL_RANK'])
         args.rank = args.rank * local_world_size + args.local_rank
-        print('world size: {}, rank: {}, local rank: {}'.format(args.world_size, args.rank, args.local_rank))
-        print(json.dumps(dict(os.environ), indent=2))
+
     elif 'SLURM_PROCID' in os.environ:
         args.rank = int(os.environ['SLURM_PROCID'])
         args.gpu = args.local_rank = int(os.environ['SLURM_LOCALID'])
         args.world_size = int(os.environ['SLURM_NPROCS'])
 
-        print('world size: {}, world rank: {}, local rank: {}, device_count: {}'.format(args.world_size, args.rank, args.local_rank, torch.cuda.device_count()))
     else:
         print('Not using distributed mode')
         args.distributed = False
         args.world_size = 1
         args.rank = 0
         args.local_rank = 0
+        # Default values to avoid crash
+        os.environ['MASTER_ADDR'] = '127.0.0.1'
+        os.environ['MASTER_PORT'] = '29500'
         return
+
+    # If not already set, define MASTER_ADDR and PORT
+    os.environ.setdefault('MASTER_ADDR', '127.0.0.1')
+    os.environ.setdefault('MASTER_PORT', '29500')
 
     print("world_size:{} rank:{} local_rank:{}".format(args.world_size, args.rank, args.local_rank))
     args.distributed = True
-    torch.cuda.set_device(args.local_rank)
     args.dist_backend = 'nccl'
+    torch.cuda.set_device(args.local_rank)
     print('| distributed init (rank {}): {}'.format(args.rank, args.dist_url), flush=True)
     torch.distributed.init_process_group(backend=args.dist_backend, init_method=args.dist_url,
                                          world_size=args.world_size, rank=args.rank)
-    print("Before torch.distributed.barrier()")
     torch.distributed.barrier()
-    print("End torch.distributed.barrier()")
     setup_for_distributed(args.rank == 0)
 
 
