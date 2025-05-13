@@ -164,7 +164,7 @@ def main(args):
     optimizer = torch.optim.AdamW(param_dicts, lr=args.lr,
                                   weight_decay=args.weight_decay)
     
-    dataset_train = build_dataset(image_set='trainval', args=args)
+    dataset_train = build_dataset(image_set='train', args=args)
     dataset_val = build_dataset(image_set='test', args=args)
 
     if args.distributed:
