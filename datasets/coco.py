@@ -626,11 +626,11 @@ def build(image_set, args):
     
     if args.dataset_file == 'aitod_v2':
         PATHS = {
-            "train": (root / "images/train", root / "annotations" / 'aitodv2_train.json'),
+            "train": (root / "images/train", root / "labels" / "train" / 'coco.json'),
             "trainval": (root / "images/trainval", root / "annotations" / 'aitodv2_trainval.json'),
-            "val": (root / "images/val", root / "annotations" / 'aitodv2_val.json'),
+            "val": (root / "images/val", root / "labels" / "val" / 'coco.json'),
             "eval_debug": (root / "images/val", root / "annotations" / 'aitodv2_val.json'),
-            "test": (root / "images/test", root / "annotations" / 'aitodv2_test.json' ),
+            "test": (root / "images/test", root / "labels" / "test" / 'coco.json' ),
         }
 
     # add some hooks to datasets
