@@ -205,7 +205,7 @@ def main(args):
     print(args)
     if os.path.exists(os.path.join(args.output_dir, 'checkpoint.pth')):
         args.resume = os.path.join(args.output_dir, 'checkpoint.pth')
-    if args.resume and args.resume != "":
+    if args.resume and len(args.resume) != 0 :
         if args.resume.startswith('https'):
             checkpoint = torch.hub.load_state_dict_from_url(
                 args.resume, map_location='cpu', check_hash=True)
