@@ -202,9 +202,9 @@ def main(args):
         model_without_ddp.detr.load_state_dict(checkpoint['model'])
 
     output_dir = Path(args.output_dir)
-    print("resume :", args.resume, len(args.resume))
     if os.path.exists(os.path.join(args.output_dir, 'checkpoint.pth')):
         args.resume = os.path.join(args.output_dir, 'checkpoint.pth')
+    print("resume :", args.resume, len(args.resume))
     if args.resume and len(args.resume) != 0 :
         if args.resume.startswith('https'):
             checkpoint = torch.hub.load_state_dict_from_url(
