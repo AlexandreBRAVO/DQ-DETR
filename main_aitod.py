@@ -33,7 +33,7 @@ def get_args_parser():
         'in xxx=yyy format will be merged into config file.')
 
     # dataset parameters
-    parser.add_argument('--dataset_file', default='aitod_v2') 
+    parser.add_argument('--dataset_file', default='archi_irisa') 
     parser.add_argument('--coco_path', type=str, default='/comp_robot/cv_public_dataset/COCO2017/')
     parser.add_argument('--coco_panoptic_path', type=str) 
     parser.add_argument('--remove_difficult', action='store_true')
