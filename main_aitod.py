@@ -211,6 +211,7 @@ def main(args):
                 args.resume, map_location='cpu', check_hash=True)
         else:
             checkpoint = torch.load(args.resume, map_location='cpu', weights_only=False)
+        print(checkpoint['model'])
         model_without_ddp.load_state_dict(checkpoint['model'])
         if args.use_ema:
             if 'ema_model' in checkpoint:
