@@ -624,7 +624,7 @@ def build(image_set, args):
     root = Path(args.coco_path)
     mode = 'instances'
     
-    if args.dataset_file == 'aitod_v2':
+    if args.dataset_file == 'archi_irisa':
         PATHS = {
             "train": (root / "images/train", root / "labels" / "train" / 'coco.json'),
             "val": (root / "images/val", root / "labels" / "val" / 'coco.json'),
