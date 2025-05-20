@@ -1,6 +1,6 @@
 _base_ = ['coco_transformer.py']
 
-num_classes=9
+num_classes=1
 lr = 0.0001
 param_dict_type = 'default'
 lr_backbone = 1e-05
@@ -10,7 +10,7 @@ lr_linear_proj_mult = 0.1
 ddetr_lr_param = False
 batch_size = 1
 weight_decay = 0.0001
-epochs = 1
+epochs = 100
 lr_drop = 11
 save_checkpoint_interval = 5
 clip_max_norm = 0.1

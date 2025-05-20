@@ -176,7 +176,6 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, out
         
         samples = samples.to(device)        
         targets = [{k: to_device(v, device) for k, v in t.items()} for t in targets]
-        print("targets :", targets)
         with torch.cuda.amp.autocast(enabled=args.amp):
             if need_tgt_for_training:
                 outputs = model(samples, targets)
