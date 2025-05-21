@@ -165,7 +165,7 @@ def main(args):
                                   weight_decay=args.weight_decay)
     
     dataset_train = build_dataset(image_set='train', args=args)
-    dataset_val = build_dataset(image_set='test', args=args)
+    dataset_val = build_dataset(image_set='train', args=args)
 
     if args.distributed:
         sampler_train = DistributedSampler(dataset_train)
