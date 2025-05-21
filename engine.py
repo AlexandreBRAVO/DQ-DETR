@@ -26,6 +26,9 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
                     device: torch.device, epoch: int, max_norm: float = 0, 
                     wo_class_error=False, lr_scheduler=None, args=None, logger=None, ema_m=None):
     scaler = torch.cuda.amp.GradScaler(enabled=args.amp)
+    for n, p in model.named_parameters():
+        if p.grad is not None:
+            print(f"{n} grad norm: {p.grad.norm()}")
 
     try:
         need_tgt_for_training = args.use_dn
@@ -63,8 +66,14 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
                 outputs = model(samples, targets)
             else:
                 outputs = model(samples)
+                print("Pred logits shape:", outputs['pred_logits'].shape)
+                print("Pred boxes shape:", outputs['pred_boxes'].shape)
+                print("Pred logits sample:", outputs['pred_logits'][0, :5, :])
+                print("Pred boxes sample:", outputs['pred_boxes'][0, :5, :])
+
         
             loss_dict = criterion(outputs, targets)
+            print("Loss dict:", {k: v.item() for k, v in loss_dict.items()})
             weight_dict = criterion.weight_dict
             losses = sum(loss_dict[k] * weight_dict[k] for k in loss_dict.keys() if k in weight_dict)
             ccm_loss = CCM_LOSS(outputs['pred_bbox_number'], ccm_targets)
@@ -181,8 +190,14 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, out
                 outputs = model(samples, targets)
             else:
                 outputs = model(samples)
+                print("Pred logits shape:", outputs['pred_logits'].shape)
+                print("Pred boxes shape:", outputs['pred_boxes'].shape)
+                print("Pred logits sample:", outputs['pred_logits'][0, :5, :])
+                print("Pred boxes sample:", outputs['pred_boxes'][0, :5, :])
+
 
             loss_dict = criterion(outputs, targets)
+            print("Loss dict:", {k: v.item() for k, v in loss_dict.items()})
         weight_dict = criterion.weight_dict
 
 
