@@ -525,7 +525,8 @@ def init_distributed_mode(args):
 def accuracy(output, target, topk=(1,)):
     """Computes the precision@k for the specified values of k"""
     if target.numel() == 0:
-        return [torch.zeros([], device=output.device)]
+        return [torch.tensor(float('nan'), device=output.device)]
+
     maxk = max(topk)
     batch_size = target.size(0)
 
