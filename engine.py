@@ -49,6 +49,7 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
     for samples, targets in metric_logger.log_every(data_loader, print_freq, header, logger=logger):
         
         samples = samples.to(device)
+        print(f"Batch size: {samples.tensors.size(0)}")
         ccm_targets = []
         for i in range(len(targets)):
             tgt_num = targets[i]['labels'].shape[0]
@@ -73,7 +74,6 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
 
         
             loss_dict = criterion(outputs, targets)
-            print("Loss dict:", {k: v.item() for k, v in loss_dict.items()})
             weight_dict = criterion.weight_dict
             losses = sum(loss_dict[k] * weight_dict[k] for k in loss_dict.keys() if k in weight_dict)
             ccm_loss = CCM_LOSS(outputs['pred_bbox_number'], ccm_targets)
@@ -197,7 +197,6 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, out
 
 
             loss_dict = criterion(outputs, targets)
-            print("Loss dict:", {k: v.item() for k, v in loss_dict.items()})
         weight_dict = criterion.weight_dict
 
 
