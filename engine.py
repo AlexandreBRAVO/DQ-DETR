@@ -49,9 +49,9 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
     for samples, targets in metric_logger.log_every(data_loader, print_freq, header, logger=logger):
         
         samples = samples.to(device)
-        print(f"Batch size: {samples.tensors.size(0)}")
         ccm_targets = []
         for i in range(len(targets)):
+            print("labels:", targets[i]['labels'])
             tgt_num = targets[i]['labels'].shape[0]
             t = 0
             for j in range(len(ccm_params)):
